@@ -5,21 +5,28 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="ハートピア 曲リスト（公開）" />
   <title>ハートピア 曲リスト</title>
+
   <style>
     :root{
-      --bg:#0b1020;
-      --card:#121a33;
-      --muted:#9aa4c7;
-      --text:#e9ecff;
-      --line:rgba(233,236,255,.12);
-      --chip:rgba(233,236,255,.10);
-      --accent:#7aa2ff;
-      --ok:#6ee7b7;
-      --warn:#fbbf24;
-      --bad:#fb7185;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius: 16px;
-      --radius2: 12px;
+      /* Pastel theme */
+      --bg:#fbfbff;
+      --card:#ffffffcc;
+      --text:#243047;
+      --muted:#6a7898;
+      --line: rgba(36,48,71,.10);
+
+      --accent:#7aa7ff;
+
+      --ok:#67d9b7;
+      --warn:#ffd27a;
+      --bad:#ff8fb0;
+
+      --chip: rgba(36,48,71,.06);
+
+      --shadow: 0 12px 30px rgba(36,48,71,.10);
+      --radius: 18px;
+      --radius2: 14px;
+
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, Arial, sans-serif;
     }
@@ -27,11 +34,13 @@
     body{
       margin:0;
       font-family:var(--sans);
-      background:
-        radial-gradient(1200px 600px at 10% 0%, rgba(122,162,255,.18), transparent 60%),
-        radial-gradient(900px 500px at 90% 20%, rgba(110,231,183,.12), transparent 60%),
-        var(--bg);
       color:var(--text);
+      background:
+        radial-gradient(900px 520px at 10% 0%, rgba(255, 184, 208,.55), transparent 60%),
+        radial-gradient(900px 520px at 90% 10%, rgba(186, 224, 255,.60), transparent 60%),
+        radial-gradient(900px 520px at 20% 90%, rgba(200, 255, 226,.55), transparent 60%),
+        radial-gradient(900px 520px at 80% 95%, rgba(255, 240, 188,.55), transparent 60%),
+        var(--bg);
     }
     a{color:inherit}
     .wrap{max-width:1100px; margin:0 auto; padding:28px 16px 50px;}
@@ -39,17 +48,17 @@
       display:flex; gap:14px; align-items:flex-end; justify-content:space-between;
       padding:8px 2px 18px;
     }
-    .title{
-      display:flex; flex-direction:column; gap:6px;
-    }
+    .title{display:flex; flex-direction:column; gap:6px;}
     h1{margin:0; font-size:28px; letter-spacing:.02em}
     .sub{color:var(--muted); font-size:13px}
+
     .card{
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.75));
       border:1px solid var(--line);
       border-radius:var(--radius);
       box-shadow:var(--shadow);
       overflow:hidden;
+      backdrop-filter: blur(10px);
     }
 
     .controls{
@@ -58,60 +67,67 @@
       gap:10px;
       padding:14px;
       border-bottom:1px solid var(--line);
-      background:rgba(0,0,0,.10);
+      background: linear-gradient(90deg, rgba(255,184,208,.20), rgba(186,224,255,.18), rgba(200,255,226,.16));
     }
-    @media (max-width: 860px){
-      .controls{grid-template-columns: 1fr 1fr; }
-    }
+    @media (max-width: 860px){ .controls{grid-template-columns: 1fr 1fr;} }
     @media (max-width: 520px){
-      .controls{grid-template-columns: 1fr; }
+      .controls{grid-template-columns: 1fr;}
       header{flex-direction:column; align-items:flex-start}
     }
 
-    .field{
-      display:flex; flex-direction:column; gap:6px;
-    }
+    .field{display:flex; flex-direction:column; gap:6px;}
     label{font-size:12px; color:var(--muted)}
+
     input[type="search"], select{
       width:100%;
       padding:10px 12px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background:rgba(0,0,0,.18);
+      border-radius:14px;
+      border:1px solid rgba(36,48,71,.12);
+      background: rgba(255,255,255,.75);
       color:var(--text);
       outline:none;
     }
-    input[type="search"]::placeholder{color:rgba(154,164,199,.75)}
+    input[type="search"]::placeholder{color:rgba(106,120,152,.75)}
+    input[type="search"]:focus, select:focus{
+      border-color: rgba(122,167,255,.55);
+      box-shadow: 0 0 0 4px rgba(122,167,255,.18);
+    }
+
     .toggle{
       display:flex; align-items:center; gap:10px;
       padding:10px 12px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background:rgba(0,0,0,.18);
+      border-radius:14px;
+      border:1px solid rgba(36,48,71,.12);
+      background: rgba(255,255,255,.75);
       user-select:none;
       cursor:pointer;
     }
     .toggle input{accent-color: var(--accent); transform: translateY(1px);}
+
     .stats{
       display:flex; align-items:center; justify-content:flex-end; gap:10px;
       padding:0 14px 12px;
       color:var(--muted);
       font-size:13px;
     }
+
     .chip{
       display:inline-flex; align-items:center; gap:8px;
       padding:6px 10px;
       border-radius:999px;
-      background:var(--chip);
-      border:1px solid var(--line);
+      background:rgba(255,255,255,.7);
+      border:1px solid rgba(36,48,71,.10);
       color:var(--text);
       font-size:12px;
       white-space:nowrap;
+      box-shadow: 0 8px 18px rgba(36,48,71,.08);
     }
+
     .dot{width:8px;height:8px;border-radius:50%;}
     .dot.ok{background:var(--ok)}
     .dot.warn{background:var(--warn)}
     .dot.bad{background:var(--bad)}
+
     .tableWrap{overflow:auto;}
     table{
       width:100%;
@@ -122,13 +138,13 @@
     }
     thead th{
       position:sticky; top:0;
-      background:rgba(10,16,32,.92);
-      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px);
       border-bottom:1px solid var(--line);
       text-align:left;
       padding:12px 12px;
       color:var(--muted);
-      font-weight:600;
+      font-weight:700;
       cursor:pointer;
       user-select:none;
       white-space:nowrap;
@@ -144,20 +160,24 @@
       border-bottom:1px solid var(--line);
       vertical-align:top;
     }
-    tbody tr:hover{background:rgba(255,255,255,.03)}
-    .col-title{font-weight:600}
+    tbody tr:hover{background:rgba(122,167,255,.08)}
+
+    .col-title{font-weight:700}
     .muted{color:var(--muted)}
+
     .badge{
       display:inline-flex; align-items:center; gap:8px;
       padding:6px 10px;
       border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(0,0,0,.18);
+      border:1px solid rgba(36,48,71,.10);
+      background: rgba(255,255,255,.70);
       font-size:12px;
+      box-shadow: 0 8px 18px rgba(36,48,71,.08);
     }
     .status-public .dot{background:var(--ok)}
     .status-private .dot{background:var(--bad)}
     .status-wip .dot{background:var(--warn)}
+
     footer{
       margin-top:14px;
       color:var(--muted);
@@ -167,10 +187,10 @@
     .kbd{
       font-family:var(--mono);
       padding:.12em .45em;
-      border:1px solid var(--line);
+      border:1px solid rgba(36,48,71,.14);
       border-bottom-width:2px;
-      border-radius:8px;
-      background:rgba(0,0,0,.15);
+      border-radius:10px;
+      background:rgba(255,255,255,.70);
       color:var(--text);
     }
   </style>
@@ -305,8 +325,9 @@
       ths: Array.from(document.querySelectorAll("thead th[data-key]")),
     };
 
-    // 分類リスト生成
-    const categories = [...new Set(songs.map(s => (s.category || "").trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"ja"));
+    // 分類リスト生成（空は除外）
+    const categories = [...new Set(songs.map(s => (s.category || "").trim()).filter(Boolean))]
+      .sort((a,b)=>a.localeCompare(b,"ja"));
     for (const c of categories){
       const opt = document.createElement("option");
       opt.value = c;
@@ -319,6 +340,21 @@
 
     function normalize(str){
       return (str ?? "").toString().toLowerCase();
+    }
+
+    // カテゴリごとにパステル色を割り当て
+    function hashHue(str){
+      let h = 0;
+      for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
+      return h % 360;
+    }
+    function pastelForCategory(category){
+      const c = (category || "other").trim() || "other";
+      const hue = hashHue(c);
+      const bg = `hsl(${hue} 75% 92%)`;
+      const border = `hsl(${hue} 55% 80%)`;
+      const text = `hsl(${hue} 35% 28%)`;
+      return { bg, border, text };
     }
 
     function statusBadge(status){
@@ -374,7 +410,16 @@
         <tr>
           <td class="col-title">${escapeHtml(s.title || "-")}</td>
           <td>${escapeHtml(s.jp || "-")}</td>
-          <td>${s.category ? `<span class="chip">${escapeHtml(s.category)}</span>` : `<span class="muted">-</span>`}</td>
+          <td>${
+            s.category
+              ? (() => {
+                  const p = pastelForCategory(s.category);
+                  return `<span class="chip" style="background:${p.bg};border-color:${p.border};color:${p.text}">
+                    ${escapeHtml(s.category)}
+                  </span>`;
+                })()
+              : `<span class="muted">-</span>`
+          }</td>
           <td>${statusBadge(s.status)}</td>
         </tr>
       `).join("");
@@ -395,7 +440,7 @@
     function renderSortIndicators(){
       for (const th of els.ths){
         const key = th.dataset.key;
-        const el = document.getElementById(`sort-${key}`);
+        const el = document.getElementById(\`sort-\${key}\`);
         if (!el) continue;
         el.textContent = (key === sortKey) ? (sortDir === "asc" ? "↑" : "↓") : "";
       }
