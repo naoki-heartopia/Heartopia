@@ -440,7 +440,7 @@
     function renderSortIndicators(){
       for (const th of els.ths){
         const key = th.dataset.key;
-        const el = document.getElementById(\`sort-\${key}\`);
+        const el = document.getElementById(`sort-${key}`);
         if (!el) continue;
         el.textContent = (key === sortKey) ? (sortDir === "asc" ? "↑" : "↓") : "";
       }
