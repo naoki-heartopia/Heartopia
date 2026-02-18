@@ -405,6 +405,7 @@
     function render(rows){
       els.tbody.innerHTML = rows.map(s => `
         <tr>
+          <td>${statusBadge(s.status)}</td>
           <td class="col-title">${escapeHtml(s.title || "-")}</td>
           <td>${escapeHtml(s.jp || "-")}</td>
           <td>${
@@ -417,7 +418,6 @@
                 })()
               : `<span class="muted">-</span>`
           }</td>
-          <td>${statusBadge(s.status)}</td>
         </tr>
       `).join("");
     }
